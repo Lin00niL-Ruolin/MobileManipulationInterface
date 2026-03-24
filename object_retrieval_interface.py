@@ -49,6 +49,14 @@ class GraspConfig:
     grasp_force: float = 10.0
 
 
+class PlannerConfig:
+    """Configuration class for OMPL Planner (compatible with OMPL_Planner expectations)"""
+    def __init__(self, planner: str = "RRTConnect", planning_time: float = 5.0, interpolate_num: int = 100):
+        self.planner = planner
+        self.planning_time = planning_time
+        self.interpolate_num = interpolate_num
+
+
 @dataclass
 class RetrievalResult:
     """Result of object retrieval execution"""
@@ -115,7 +123,17 @@ class ObjectRetrievalInterface:
         Args:
             obstacles_info: Whether to get obstacle information
         """
-        self.planner = OMPL_Planner(self.robot, self.planner_config)
+        # Convert dict config to PlannerConfig object if needed
+        if isinstance(self.planner_config, dict):
+            planner_cfg = PlannerConfig(
+                planner=self.planner_config.get('planner', 'RRTConnect'),
+                planning_time=self.planner_config.get('planning_time', 5.0),
+                interpolate_num=self.planner_config.get('interpolate_num', 100)
+            )
+        else:
+            planner_cfg = self.planner_config or PlannerConfig()
+        
+        self.planner = OMPL_Planner(self.robot, planner_cfg)
         if obstacles_info:
             self.planner.get_obstacles_info()
     
