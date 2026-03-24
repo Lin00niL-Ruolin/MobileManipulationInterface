@@ -12,7 +12,7 @@ Date: 2026-03-24
 """
 
 import time
-from typing import List, Optional, Dict, Any, Callable
+from typing import List, Optional, Dict, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
