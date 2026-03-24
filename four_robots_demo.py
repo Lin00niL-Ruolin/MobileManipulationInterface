@@ -180,7 +180,7 @@ def robot_movement_pattern_2(robot_info, client, visualizer):
     for i, config in enumerate(joint_configs):
         try:
             # Move to joint configuration
-            robot.sim_set_arm_to_joint_values(config)
+            robot.sim_move_arm_to_joint_values(config)
             client.run(30)
             print(f"[{name}] Arm configuration {i+1}/{len(joint_configs)} reached")
         except Exception as e:
@@ -403,7 +403,7 @@ def run_parallel_movements(client, visualizer, robots):
         for robot_name, robot_info in robot_list:
             robot = robot_info['instance']
             try:
-                robot.sim_set_arm_to_joint_values(joint_config)
+                robot.sim_move_arm_to_joint_values(joint_config)
             except Exception as e:
                 print(f"        [{robot_name}] Arm movement failed: {e}")
         client.run(30)
