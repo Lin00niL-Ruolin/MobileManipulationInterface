@@ -41,12 +41,7 @@ def create_scene_with_four_robots(scene_path="Asset/Scene/Scene/Kitchen.json"):
     Returns:
         tuple: (client, visualizer, robots_dict)
     """
-    # Ensure we're in the correct working directory for config loading
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.join(script_dir, '..')
-    os.chdir(project_root)
-    
-    # Load configuration
+    # Load configuration (assumes running from Examples directory)
     config_path = "Config/grasp_bowl_in_kitchen.yaml"
     cfg = load_config(config_path)
     
@@ -349,7 +344,7 @@ def demo_all_robots():
     print("Four Robots Demonstration")
     print("=" * 60)
     
-    # Create scene with four robots (working directory is set inside create_scene_with_four_robots)
+    # Create scene with four robots
     scene_path = "Asset/Scene/Scene/Kitchen.json"
     client, visualizer, robots = create_scene_with_four_robots(scene_path)
     
@@ -380,4 +375,7 @@ def demo_all_robots():
 
 
 if __name__ == "__main__":
+    # Change to Examples directory (required for config loading)
+    os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Examples'))
+    
     demo_all_robots()
